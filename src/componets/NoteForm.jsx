@@ -3,15 +3,14 @@ import { connect } from 'react-redux';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { addNote } from '../redux/Note/note.actions';
 import Container from '../componets/Container.module.css';
 import Form from '../componets/Form.module.css';
 import PropTypes from 'prop-types';
-import CategoryFilter from '../componets/CategoryFilter';
+import CategoryFilter from './CategoryFilter';
 
-function AddNoteScreen(props) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+function NoteForm(props) {
+  const [title, setTitle] = useState(props.note ? props.note.title : '');
+  const [description, setDescription] = useState(props.note ? props.note.description : '');
   const [inputError, setInputError] = useState('');
   const [category, setCategory] = useState('');
 
@@ -31,17 +30,16 @@ function AddNoteScreen(props) {
   const onSubmit = (e) => {
     e.preventDefault();
     if (title === '' || description === '' || category === '') {
-      setInputError('Please provide title, description and category.');
+      setInputError('Please provide title and description.');
     } else {
       setInputError('');
       const data = {
         title: title,
         description: description,
         category: category,
-        id: uuidv4(),
+        id: props.note ? props.note.id : uuidv4(),
       };
-      console.log(data);
-      props.dispatch(addNote(data));
+      props.dispatch(props.onSubmit(data));
       setTitle('');
       setDescription('');
       props.history.push('/');
@@ -62,23 +60,20 @@ function AddNoteScreen(props) {
           cols="30"
           rows="5"
         />
+
         <button>Add Note</button>
       </form>
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    note: state.notes.note,
-  };
-};
-
-AddNoteScreen.propTypes = {
+NoteForm.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+    push: PropTypes.func,
+  }),
   dispatch: PropTypes.func,
+  note: PropTypes.object,
+  onSubmit: PropTypes.func,
 };
 
-export default connect(mapStateToProps)(AddNoteScreen);
+export default NoteForm;

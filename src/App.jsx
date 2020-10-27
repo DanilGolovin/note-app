@@ -3,6 +3,9 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import HomeScreen from './screens/HomeScreen';
 import AddNoteScreen from './screens/AddNoteScreen';
+import UpdateNoteScreen from './screens/UpdateNoteScreen';
+import DetailNoteScreen from './screens/DetailNoteScreen';
+import CategoriesScreen from './screens/CategoriesScreen';
 
 function App() {
   return (
@@ -10,9 +13,9 @@ function App() {
       <>
         <Route path="/add-note" component={AddNoteScreen} />
         <Route path="/" exact={true} component={HomeScreen} />
-        {/*<Route path="//:id" component={UpdateNoteScreen} />
-        <Route path="//:id" component={DetailsScreen} />
-        <Route path="/" exact={true} component={HomeScreen} />*/}
+        <Route path="/update-note/:id" component={UpdateNoteScreen} />
+        <Route path="/detail-note/:id" component={DetailNoteScreen} />
+        <Route path="/categories" component={CategoriesScreen} />
       </>
     </BrowserRouter>
   );
