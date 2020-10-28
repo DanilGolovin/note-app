@@ -1,0 +1,22 @@
+textarea:focus, input:focus, select:focus{
+    outline: none;
+}
+
+.container {
+    background-color: white;
+    width: 100%;
+    resize: vertical;
+    padding: 15px;
+    border-radius: 15px;
+    border:0;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.20);
+    margin: 20px 0;
+    box-sizing: border-box;
+}
+
+.filter_select {
+    max-width: 100px;
+    height: 36px;
+    margin: 0 0;
+    padding: 0 10px;
+}

@@ -1,84 +1,48 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-
-import { v4 as uuidv4 } from 'uuid';
-
-import { addNote } from '../redux/Note/note.actions';
-import Container from '../componets/Container.module.css';
-import Form from '../componets/Form.module.css';
 import PropTypes from 'prop-types';
-import CategoryFilter from '../componets/CategoryFilter';
+import Container from '../styles/Container.module.css';
+import { useParams } from 'react-router';
+import NoteForm from '../componets/NoteForm';
+import { addNote } from '../redux/Note/note.actions';
 
-function AddNoteScreen(props) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [inputError, setInputError] = useState('');
-  const [category, setCategory] = useState('');
-
-  const onCategoryChoose = (category) => {
-    setCategory(category);
-  };
-
-  const onTitleChange = (e) => {
-    const noteTitle = e.target.value;
-    setTitle(noteTitle);
-  };
-
-  const onDescriptionChange = (e) => {
-    const noteDescription = e.target.value;
-    setDescription(noteDescription);
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (title === '' || description === '' || category === '') {
-      setInputError('Please provide title, description and category.');
-    } else {
-      setInputError('');
-      const data = {
-        title: title,
-        description: description,
-        category: category,
-        id: uuidv4(),
-      };
-      console.log(data);
-      props.dispatch(addNote(data));
-      setTitle('');
-      setDescription('');
-      props.history.push('/');
-    }
-  };
-
-  return (
-    <div className={Container.center}>
-      <h1>Add your note</h1>
-      <p>{inputError}</p>
-      <form className={Form.wrapper} onSubmit={onSubmit}>
-        <input type="text" placeholder="title" value={title} onChange={onTitleChange} />
-        <CategoryFilter category={category} onCategorySelect={onCategoryChoose} />
-        <textarea
-          value={description}
-          onChange={onDescriptionChange}
-          placeholder="Description..."
-          cols="30"
-          rows="5"
-        />
-        <button>Add Note</button>
-      </form>
-    </div>
-  );
-}
-
-const mapStateToProps = (state) => {
-  return {
-    note: state.notes.note,
-  };
-};
-
-AddNoteScreen.propTypes = {
+const AddNoteScreenProps = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
   dispatch: PropTypes.func,
+  note: PropTypes.object,
+  id: PropTypes.string,
+  notes: PropTypes.array,
 };
+
+const AddNoteScreen = (props) => {
+  const { notes, dispatch, history } = props;
+
+  const params = useParams();
+  const [note, setNote] = useState(notes.find((note) => note.id === params.id));
+
+  return (
+    <div className={Container.center}>
+      <NoteForm
+        actionName={'Add note'}
+        formTitle={'Add new note'}
+        onSubmit={(note) => {
+          dispatch(addNote(note));
+          history.push('/');
+        }}
+        note={note}
+      />
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    notes: state.notes,
+  };
+};
+
+AddNoteScreen.propTypes = AddNoteScreenProps;
 
 export default connect(mapStateToProps)(AddNoteScreen);

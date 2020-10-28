@@ -13,8 +13,10 @@ const reducer = (state = [], action) => {
       return state.map((note) => {
         if (note.id === action.payload.id) {
           return {
+            ...note,
             title: action.payload.title,
             description: action.payload.description,
+            category: action.payload.category,
           };
         } else return note;
       });
