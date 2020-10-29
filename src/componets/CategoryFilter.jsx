@@ -1,42 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-
-import Container from '../componets/Container.module.css';
 import PropTypes from 'prop-types';
 
+const CategoryFilterProps = {
+  dispatch: PropTypes.func,
+  categories: PropTypes.array,
+  onCategorySelect: PropTypes.func,
+  class: PropTypes.string,
+};
+
 function CategoryFilter(props) {
-  const [categories, setCategories] = useState(props.categories);
-  const [currentCategory, setCurrentCategory] = useState({ name: 'all' });
+  const { categories, onCategorySelect } = props;
+
+  const [filterCategories, setFilterCategories] = useState(categories);
+  const [currentCategory, setCurrentCategory] = useState('all');
 
   useEffect(() => {
-    if (props.onCategorySelect) {
-      props.onCategorySelect(currentCategory);
+    if (onCategorySelect) {
+      onCategorySelect(currentCategory);
     }
   }, [currentCategory]);
+
   return (
-    <div className={Container.center}>
+    <>
       <select
-        defaultValue={'all'}
+        className={props.class ? props.class : ''}
+        defaultValue="all"
         name={'Categories'}
         onChange={(e) => {
           setCurrentCategory(e.target.value);
-          if (props.onCategorySelect) {
-            props.onCategorySelect(e.target.value);
-            console.log(categories);
+          if (onCategorySelect) {
+            onCategorySelect(e.target.value);
           }
         }}
       >
-        {categories ? (
-          categories.map((category) => (
-            <option key={category.name} value={category.name}>
-              {category.name}
-            </option>
-          ))
-        ) : (
-          <option key={'all'} value={'all'}>{`all`}</option>
-        )}
+        <option key="all" value="all">
+          all
+        </option>
+        {filterCategories.map((category) => (
+          <option key={category.name} value={category.name}>
+            {category.name}
+          </option>
+        ))}
       </select>
-    </div>
+    </>
   );
 }
 
@@ -46,10 +53,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-CategoryFilter.propTypes = {
-  dispatch: PropTypes.func,
-  categories: PropTypes.array,
-  onCategorySelect: PropTypes.func,
-};
+CategoryFilter.propTypes = CategoryFilterProps;
 
 export default connect(mapStateToProps)(CategoryFilter);

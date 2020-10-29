@@ -2,22 +2,31 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import NoteListItem from './NoteListItem';
-import selectNotes from '../selectors/notes';
+import Container from '../styles/Container.module.css';
+
+const NoteListProps = {
+  notes: PropTypes.array.isRequired,
+  category: PropTypes.any,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const NoteList = (props) => {
-  const [notes, setNotes] = useState(props.notes);
+  const { category, notes, history } = props;
+
+  const [listNotes, setListNotes] = useState(notes);
 
   useEffect(() => {
-    if (props.category === 'all' || props.category.name === 'all') setNotes(props.notes);
-    else setNotes(props.notes.filter((note) => note.category === props.category));
-  }, [props.category, props.notes]);
+    if (category === 'all') setListNotes(notes);
+    else setListNotes(notes.filter((note) => note.category === category));
+  }, [category, notes]);
 
   return (
-    <div>
-      <h3>Note List</h3>
-      {notes.length !== 0
-        ? notes.map((note) => {
-            return <NoteListItem key={note.id} {...note} />;
+    <div className={Container.note_list}>
+      {listNotes.length !== 0
+        ? listNotes.map((note) => {
+            return <NoteListItem history={history} key={note.id} {...note} />;
           })
         : 'no notes'}
     </div>
@@ -30,9 +39,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-NoteList.propTypes = {
-  notes: PropTypes.array.isRequired,
-  category: PropTypes.object,
-};
+NoteList.propTypes = NoteListProps;
 
 export default connect(mapStateToProps)(NoteList);
