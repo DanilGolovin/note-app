@@ -8,7 +8,10 @@
 }
 
 .header {
-    width: 1600px;
+    max-width: 1600px;
+    width: -webkit-fill-available;
+    padding: 0 20px;
+    box-sizing: unset;
     display: flex;
     justify-content: space-between;
 }

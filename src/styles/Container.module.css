@@ -1,6 +1,7 @@
 .main {
-    width: 1600px;
-    padding-top: 30px;
+    max-width: 1640px;
+    width: -webkit-fill-available;
+    padding: 30px 20px 0;
 }
 
 .center {
@@ -21,17 +22,42 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 300px;
+    max-width: 300px;
+    width: -webkit-fill-available;
 }
 
 .flexBetween {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.manu {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .manu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .category {
+        max-width: none;
+        padding-bottom: 20px;
+    }
+
+    .note_list {
+        justify-content: center;
+    }
 }
 
 .note_list {
     display: flex;
     flex-wrap: wrap;
+    padding: 20px 0px;
 }
 
 .detail_wrapper {

@@ -24,7 +24,7 @@ const HomeScreen = ({ history } = props) => {
   return (
     <div className={Container.center}>
       <div className={Container.main}>
-        <div className={Container.flexBetween}>
+        <div className={Container.manu}>
           <div className={Container.category}>
             <CategoryFilter
               class={Input.container + ' ' + Input.filter_select}

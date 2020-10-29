@@ -13,13 +13,11 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <>
-        <Route path="/" exact={true} component={HomeScreen} />
-        <Route path="/add-note" component={AddNoteScreen} />
-        <Route path="/update-note/:id" component={UpdateNoteScreen} />
-        <Route path="/detail-note/:id" component={DetailNoteScreen} />
-        <Route path="/categories" component={CategoriesScreen} />
-      </>
+      <Route path="/" exact={true} component={HomeScreen} />
+      <Route path="/add-note" component={AddNoteScreen} />
+      <Route path="/update-note/:id" component={UpdateNoteScreen} />
+      <Route path="/detail-note/:id" component={DetailNoteScreen} />
+      <Route path="/categories" component={CategoriesScreen} />
     </BrowserRouter>
   );
 }

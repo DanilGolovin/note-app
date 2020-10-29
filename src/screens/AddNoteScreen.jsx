@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Container from '../styles/Container.module.css';
@@ -18,10 +18,8 @@ const AddNoteScreenProps = {
 
 const AddNoteScreen = (props) => {
   const { notes, dispatch, history } = props;
-
   const params = useParams();
-  const [note, setNote] = useState(notes.find((note) => note.id === params.id));
-
+  const note = useMemo(() => notes.find((note) => note.id === params.id), [params.id, notes]);
   return (
     <div className={Container.center}>
       <NoteForm
