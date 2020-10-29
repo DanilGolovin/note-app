@@ -92,3 +92,10 @@
     border: 1px solid #e31717;
     box-shadow: 3px 3px 6px rgba(0,0,0,0.45);
 }
+
+.logout_btn {
+    color: #ffffff;
+    border: none;
+    background-color: rgb(33, 166, 255);
+    height: 36px;
+}

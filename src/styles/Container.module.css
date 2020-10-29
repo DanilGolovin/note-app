@@ -72,3 +72,7 @@
     margin: 5% 5%;
     box-sizing: border-box;
 }
+
+.login_wrapper {
+    height: 100vh;
+}

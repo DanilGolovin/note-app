@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -11,15 +11,14 @@ const CategoryFilterProps = {
 
 function CategoryFilter(props) {
   const { categories, onCategorySelect } = props;
-
-  const [filterCategories, setFilterCategories] = useState(categories);
+  const filterCategories = useMemo(() => categories, [categories]);
   const [currentCategory, setCurrentCategory] = useState('all');
 
   useEffect(() => {
     if (onCategorySelect) {
       onCategorySelect(currentCategory);
     }
-  }, [currentCategory]);
+  }, [currentCategory, onCategorySelect]);
 
   return (
     <>

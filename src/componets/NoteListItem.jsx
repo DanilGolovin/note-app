@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import Note from '../styles/NoteItem.module.css';
 import Container from '../styles/Container.module.css';
 import PropTypes from 'prop-types';
