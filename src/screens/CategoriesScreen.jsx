@@ -36,6 +36,7 @@ function CategoriesScreen(props) {
 
     if (hasCategory()) setError('This category already exists!');
     else if (category === '') setError('Category should not be empty!');
+    else if (category.toLowerCase() === 'all') setError('You cannot create default category!');
     else {
       dispatch(addCategory({ name: category.toLowerCase() }));
       setCategory('');
