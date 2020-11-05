@@ -14,15 +14,15 @@ textarea:focus, input:focus, select:focus{
     box-sizing: border-box;
 }
 
-.container:active {
-    border-radius: 15px 15px 0px 0px;
-}
-
 .filter_select {
     max-width: 100px;
     height: 36px;
     margin: 0 0;
     padding: 0 10px;
+}
+
+.filter_select:active {
+    border-radius: 15px 15px 0px 0px;
 }
 
 .filter_select option {

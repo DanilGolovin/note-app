@@ -3,14 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Button from '../styles/Button.module.css';
 import Container from '../styles/Container.module.css';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import NoteForm from '../componets/NoteForm';
 import { deleteNote, updateNote } from '../redux/Note/note.actions';
 
 const UpdateNoteScreenProps = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   dispatch: PropTypes.func,
   note: PropTypes.object,
   id: PropTypes.string,
@@ -18,9 +15,11 @@ const UpdateNoteScreenProps = {
 };
 
 const UpdateNoteScreen = (props) => {
-  const { notes, dispatch, history } = props;
+  const { notes, dispatch } = props;
 
+  const history = useHistory();
   const params = useParams();
+
   const note = useMemo(() => notes.find((note) => note.id === params.id), [params.id, notes]);
 
   return (
