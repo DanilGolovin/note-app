@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import { logout } from '../redux/Auth/auth.actions';
 
@@ -8,13 +8,11 @@ import HeaderStyles from '../styles/Header.module.css';
 import Button from '../styles/Button.module.css';
 
 const Header = () => {
-  const email = useMemo(() => localStorage.getItem('email'), []);
-
+  const email = useSelector((state) => state.auth.user.email);
   const dispatch = useDispatch();
   const history = useHistory();
 
   const onLogoutClick = () => {
-    console.log('logout');
     history.push('/');
     dispatch(logout());
   };
@@ -24,7 +22,7 @@ const Header = () => {
       <div className={HeaderStyles.header}>
         <h1 className={HeaderStyles.title}>Note App</h1>
         <div className={HeaderStyles.info}>
-          {email}
+          <p>{email && email}</p>
           <div className={HeaderStyles.buttons_container}>
             <NavLink
               to={'/dashboard'}

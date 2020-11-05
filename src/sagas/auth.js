@@ -6,7 +6,7 @@ import { firebaseAuth } from '../firebase/firebase';
 import { authError, authSuccess, logoutError, logoutSuccess } from '../redux/Auth/auth.actions';
 
 export function* loginSaga(action) {
-  const { email, password } = action.user;
+  const { email, password } = action.payload.user;
   console.log('login with email: ', email, ' and password: ', password);
 
   try {
@@ -19,7 +19,7 @@ export function* loginSaga(action) {
 }
 
 export function* signupSaga(action) {
-  const { email, password } = action.user;
+  const { email, password } = action.payload.user;
   console.log('Signup with email: ', email, ' and password: ', password);
 
   try {

@@ -10,15 +10,11 @@ import UpdateNoteScreen from '../screens/UpdateNoteScreen';
 import DetailNoteScreen from '../screens/DetailNoteScreen';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import LoginScreen from '../screens/AuthScreen';
-import { useSelector } from 'react-redux';
-import Loader from '../componets/Loader';
 
-const AppRouter = () => {
-  const isLoading = useSelector((state) => state.auth.loading);
+import LoadingWrapper from '../wrappers/LoadingWrapper';
 
-  const content = isLoading ? (
-    <Loader />
-  ) : (
+const AppRouter = () => (
+  <LoadingWrapper>
     <BrowserRouter>
       <Switch>
         <PublicRoute path="/" component={LoginScreen} exact={true} />
@@ -29,9 +25,7 @@ const AppRouter = () => {
         <PrivateRoute path="/categories" component={CategoriesScreen} />
       </Switch>
     </BrowserRouter>
-  );
-
-  return content;
-};
+  </LoadingWrapper>
+);
 
 export default AppRouter;

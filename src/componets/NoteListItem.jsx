@@ -14,23 +14,18 @@ const NoteListItemProps = {
 const NoteListItem = ({ title, description, id }) => {
   const history = useHistory();
 
-  const onClick = (e) => {
+  const onNoteClick = (e, path) => {
     e.stopPropagation();
-    history.push(`/detail-note/${id}`);
+    history.push(`/${path}-note/${id}`);
   };
+
   return (
-    <div className={Note.detail_link} onClick={onClick}>
+    <div className={Note.detail_link} onClick={(e) => onNoteClick(e, 'detail')}>
       <div className={Note.container}>
         <h2 className={Note.title}>{title}</h2>
         <p className={Note.description}>{description}</p>
         <div className={Container.center}>
-          <div
-            className={Note.link}
-            onClick={(e) => {
-              e.stopPropagation();
-              history.push(`/update-note/${id}`);
-            }}
-          >
+          <div className={Note.link} onClick={(e) => onNoteClick(e, 'update')}>
             <span className={Note.edit_link} />
           </div>
         </div>

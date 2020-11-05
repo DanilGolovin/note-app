@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Form from '../styles/Form.module.css';
@@ -9,7 +9,8 @@ import Container from '../styles/Container.module.css';
 import Text from '../styles/Text.module.css';
 
 import { authLogin, authSignup } from '../redux/Auth/auth.actions';
-import useAuth from '../hooks/useAuth';
+
+import { validateEmail, validatePassword } from '../helpers/validators';
 
 const AuthScreen = () => {
   const dispatch = useDispatch();
@@ -19,9 +20,9 @@ const AuthScreen = () => {
   const [inputError, setInputError] = useState('');
   const [login, setLogin] = useState(true);
 
-  const [authError, setAuthError] = useState(useAuth().errorMessage);
+  const [authError, setAuthError] = useState(useSelector((state) => state.auth.error.errorMessage));
 
-  const hasError = useAuth().hasError;
+  const hasError = useSelector((state) => state.auth.error.hasError);
 
   const onEmailChange = (e) => {
     setEmail(e.target.value);
@@ -35,16 +36,6 @@ const AuthScreen = () => {
     setInputError('');
   };
 
-  const validateEmail = () => {
-    const reEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return reEmail.test(email.toLowerCase());
-  };
-
-  const validatePassword = () => {
-    const rePassword = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
-    return rePassword.test(password);
-  };
-
   const onLoginClick = () => {
     setLogin(!login);
   };
@@ -52,9 +43,9 @@ const AuthScreen = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     setInputError('');
-    if (!validateEmail()) {
+    if (!validateEmail(email)) {
       setInputError('Invalid email!');
-    } else if (!validatePassword()) {
+    } else if (!validatePassword(password)) {
       setInputError(
         'Password must contain minimum six characters, at least one letter and one number!',
       );

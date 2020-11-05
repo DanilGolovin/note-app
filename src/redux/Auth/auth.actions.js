@@ -8,28 +8,32 @@ import {
   LOGOUT_USER_ERROR,
 } from './auth.types';
 
-export const authLogin = (user) => {
-  return {
-    type: AUTH_LOGIN_USER,
+export const authLogin = (user) => ({
+  type: AUTH_LOGIN_USER,
+  payload: {
     user,
-  };
-};
+  },
+});
 
-export const authSignup = (user) => {
-  return {
-    type: AUTH_SIGNUP_USER,
+export const authSignup = (user) => ({
+  type: AUTH_SIGNUP_USER,
+  payload: {
     user,
-  };
-};
+  },
+});
 
 export const authSuccess = (user) => ({
   type: AUTH_SUCCESS,
-  user,
+  payload: {
+    user,
+  },
 });
 
 export const authError = (error) => ({
   type: AUTH_ERROR,
-  error,
+  payload: {
+    error,
+  },
 });
 
 export const logout = () => ({

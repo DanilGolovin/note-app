@@ -11,60 +11,74 @@ import {
 const INITIAL_STATE = {
   loading: false,
   error: { hasError: false, errorMessage: '' },
+  user: {},
+  isAuthenticated: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_LOGIN_USER:
-      return { loading: true, error: { hasError: false, errorMessage: '' } };
-
-    case AUTH_SIGNUP_USER:
-      return { loading: true, error: { hasError: false, errorMessage: '' } };
-
-    case AUTH_SUCCESS:
-      return { ...state, action, loading: false, error: { hasError: false, errorMessage: '' } };
-    case AUTH_ERROR:
       return {
         ...state,
-        action,
+        isAuthenticated: false,
+        loading: true,
+        error: { hasError: false, errorMessage: '' },
+      };
+
+    case AUTH_SIGNUP_USER:
+      return {
+        ...state,
+        isAuthenticated: false,
         loading: false,
-        error: { hasError: true, errorMessage: action.error },
+        error: { hasError: false, errorMessage: '' },
+      };
+
+    case AUTH_SUCCESS: {
+      const { user } = action.payload;
+
+      return {
+        ...state,
+        user,
+        isAuthenticated: true,
+        loading: false,
+        error: { hasError: false, errorMessage: '' },
+      };
+    }
+
+    case AUTH_ERROR:
+      const { error } = action.payload;
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+        error: { hasError: true, errorMessage: error },
       };
 
     case LOGOUT_USER:
-      return { loading: true, error: { hasError: false, errorMessage: '' } };
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: true,
+        error: { hasError: false, errorMessage: '' },
+      };
     case LOGOUT_USER_SUCCESS:
-      return { loading: false, error: { hasError: false, errorMessage: '' } };
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: {},
+        loading: false,
+        error: { hasError: false, errorMessage: '' },
+      };
     case LOGOUT_USER_ERROR:
-      return { loading: false, error: { hasError: true, errorMessage: 'Logout error' } };
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: {},
+        loading: false,
+        error: { hasError: true, errorMessage: 'Logout error' },
+      };
 
     default:
       return state;
   }
 };
-
-// const INITIAL_STATE = {
-//   currentUser: null,
-//   error: null,
-// };
-//
-// const authReducer = (state = INITIAL_STATE, action) => {
-//   switch (action.type) {
-//     case LOG_IN_SUCCESS:
-//       return {
-//         ...state,
-//         currentUser: action.payload,
-//         error: null,
-//       };
-//     case LOG_IN_FAILURE:
-//     case REGISTER_FAILURE:
-//       return {
-//         ...state,
-//         error: action.payload,
-//       };
-//     case LOG_OUT:
-//       return INITIAL_STATE;
-//     default:
-//       return state;
-//   }
-// };
