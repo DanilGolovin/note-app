@@ -3,18 +3,17 @@ import { connect } from 'react-redux';
 import Note from '../styles/NoteItem.module.css';
 import Container from '../styles/Container.module.css';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
 const NoteListItemProps = {
   title: PropTypes.string,
   description: PropTypes.string,
   id: PropTypes.string,
-  dispatch: PropTypes.func,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
-const NoteListItem = ({ title, description, id, history }) => {
+const NoteListItem = ({ title, description, id }) => {
+  const history = useHistory();
+
   const onClick = (e) => {
     e.stopPropagation();
     history.push(`/detail-note/${id}`);

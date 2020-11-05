@@ -7,13 +7,10 @@ import Container from '../styles/Container.module.css';
 const NoteListProps = {
   notes: PropTypes.array.isRequired,
   category: PropTypes.any,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 const NoteList = (props) => {
-  const { category, notes, history } = props;
+  const { category, notes } = props;
 
   const [listNotes, setListNotes] = useState(notes);
 
@@ -26,7 +23,7 @@ const NoteList = (props) => {
     <div className={Container.note_list}>
       {listNotes.length !== 0
         ? listNotes.map((note) => {
-            return <NoteListItem history={history} key={note.id} {...note} />;
+            return <NoteListItem key={note.id} {...note} />;
           })
         : 'no notes'}
     </div>

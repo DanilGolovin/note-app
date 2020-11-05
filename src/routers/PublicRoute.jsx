@@ -1,34 +1,34 @@
-import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useAuth from '../hooks/useAuth';
 
 const PublicRouteProps = {
   isAuthenticated: PropTypes.bool,
-  component: PropTypes.object,
+  component: PropTypes.oneOfType([PropTypes.object, PropTypes.node, PropTypes.func]),
   rest: PropTypes.array,
 };
 
 export const PublicRoute = (props) => {
-  const { isAuthenticated, component: Component, ...rest } = props;
-
-  const user = useMemo(
-    () => (isAuthenticated ? isAuthenticated : localStorage.getItem('isAuthenticated')),
-    [isAuthenticated],
-  );
+  const { isSignedIn, authStatusReported } = useAuth();
+  const { component: Component, ...rest } = props;
 
   return (
     <Route
       {...rest}
-      component={(props) => (user ? <Redirect to="/dashboard" /> : <Component {...props} />)}
+      component={() =>
+        isSignedIn ? (
+          <Redirect to="/dashboard" />
+        ) : (
+          <div>
+            <Component {...props} />
+          </div>
+        )
+      }
     />
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
 PublicRoute.propTypes = PublicRouteProps;
 
-export default connect(mapStateToProps)(PublicRoute);
+export default PublicRoute;

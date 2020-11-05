@@ -76,3 +76,17 @@
 .login_wrapper {
     height: 100vh;
 }
+
+.error_wrapper {
+    height: 100px;
+}
+
+.error {
+    margin: 20px 20px;
+    border-radius: 15px;
+    border: 1px solid #ba4343;
+}
+
+.error_hidden {
+    display: none;
+}

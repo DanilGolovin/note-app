@@ -1,19 +1,23 @@
 import React, { useMemo } from 'react';
-import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
+import { connect, useDispatch } from 'react-redux';
 
 import { logout } from '../redux/Auth/auth.actions';
 
 import HeaderStyles from '../styles/Header.module.css';
 import Button from '../styles/Button.module.css';
 
-const HeaderProps = {
-  dispatch: PropTypes.func,
-};
-
-const Header = ({ dispatch }) => {
+const Header = () => {
   const email = useMemo(() => localStorage.getItem('email'), []);
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const onLogoutClick = () => {
+    console.log('logout');
+    history.push('/');
+    dispatch(logout());
+  };
 
   return (
     <header className={HeaderStyles.container}>
@@ -33,7 +37,7 @@ const Header = ({ dispatch }) => {
             >
               To Home Page
             </NavLink>
-            <button className={Button.logout_btn} onClick={() => dispatch(logout())}>
+            <button className={Button.logout_btn} onClick={onLogoutClick}>
               LOGOUT
             </button>
           </div>
@@ -48,7 +52,5 @@ const mapStateToProps = (state) => {
     auth: state.auth,
   };
 };
-
-Header.propTypes = HeaderProps;
 
 export default connect(mapStateToProps)(Header);

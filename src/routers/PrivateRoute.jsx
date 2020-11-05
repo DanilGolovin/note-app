@@ -1,28 +1,24 @@
-import React, { useMemo } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import Header from '../componets/Header';
 import PropTypes from 'prop-types';
+import useAuth from '../hooks/useAuth';
 
 const PrivateRouteProps = {
   isAuthenticated: PropTypes.bool,
-  component: PropTypes.node,
+  component: PropTypes.oneOfType([PropTypes.object, PropTypes.node, PropTypes.func]),
   rest: PropTypes.array,
 };
 
 export const PrivateRoute = (props) => {
-  const { isAuthenticated, component: Component, ...rest } = props;
-
-  const user = useMemo(
-    () => (isAuthenticated ? isAuthenticated : localStorage.getItem('isAuthenticated')),
-    [isAuthenticated],
-  );
+  const { isSignedIn, authStatusReported } = useAuth();
+  const { component: Component, ...rest } = props;
 
   return (
     <Route
       {...rest}
-      component={(props) =>
-        user ? (
+      component={() =>
+        isSignedIn ? (
           <div>
             <Header />
             <Component {...props} />
@@ -35,10 +31,6 @@ export const PrivateRoute = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
-
 PrivateRoute.propTypes = PrivateRouteProps;
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default PrivateRoute;

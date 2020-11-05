@@ -98,4 +98,10 @@
     border: none;
     background-color: rgb(33, 166, 255);
     height: 36px;
+    transition: .2s;
+}
+
+.logout_btn:hover {
+    cursor: pointer;
+    filter: brightness(110%);
 }

@@ -5,16 +5,9 @@ import Input from '../styles/Input.module.css';
 import Container from '../styles/Container.module.css';
 import Button from '../styles/Button.module.css';
 import CategoryFilter from '../componets/CategoryFilter';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const HomeScreenProps = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-const HomeScreen = ({ history } = props) => {
+const HomeScreen = () => {
   const [category, setCategory] = useState('');
 
   const onCategoryChoose = (category) => {
@@ -42,13 +35,11 @@ const HomeScreen = ({ history } = props) => {
             + Add New Note
           </NavLink>
         </div>
-        <NoteList category={category} history={history} />
+        <NoteList category={category} />
       </div>
     </div>
   );
 };
-
-HomeScreen.propTypes = HomeScreenProps;
 
 const mapStateToProps = (state) => {
   return {
