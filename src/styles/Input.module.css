@@ -20,3 +20,12 @@ textarea:focus, input:focus, select:focus{
     margin: 0 0;
     padding: 0 10px;
 }
+
+.filter_select:active {
+    border-radius: 15px 15px 0px 0px;
+}
+
+.filter_select option {
+    outline: none;
+    background-color: #ffffff;
+}

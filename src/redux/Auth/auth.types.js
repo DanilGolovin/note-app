@@ -1,0 +1,9 @@
+export const AUTH_LOGIN_USER = 'AUTH_LOGIN_USER';
+export const AUTH_SIGNUP_USER = 'AUTH_SIGNUP_USER';
+
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_ERROR = 'AUTH_ERROR';
+
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
+export const LOGOUT_USER_ERROR = 'LOGOUT_USER_ERROR';

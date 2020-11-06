@@ -1,0 +1,16 @@
+.error_message {
+   color: darkred;
+   max-width: 400px;
+   padding: 0 10px;
+   text-align: center;
+}
+
+.outlined_text {
+   color: orange;
+   outline: orange;
+}
+
+.outlined_text:hover {
+   cursor: pointer;
+   filter: brightness(80%);
+}

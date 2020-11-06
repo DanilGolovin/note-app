@@ -11,15 +11,21 @@ const CategoryFilterProps = {
 
 function CategoryFilter(props) {
   const { categories, onCategorySelect } = props;
-
-  const [filterCategories, setFilterCategories] = useState(categories);
+  // const filterCategories = useMemo(() => categories, [categories]);
   const [currentCategory, setCurrentCategory] = useState('all');
 
   useEffect(() => {
     if (onCategorySelect) {
       onCategorySelect(currentCategory);
     }
-  }, [currentCategory]);
+  }, [currentCategory, onCategorySelect]);
+
+  const onCategoriesChange = (e) => {
+    setCurrentCategory(e.target.value);
+    if (onCategorySelect) {
+      onCategorySelect(e.target.value);
+    }
+  };
 
   return (
     <>
@@ -27,17 +33,12 @@ function CategoryFilter(props) {
         className={props.class ? props.class : ''}
         defaultValue="all"
         name={'Categories'}
-        onChange={(e) => {
-          setCurrentCategory(e.target.value);
-          if (onCategorySelect) {
-            onCategorySelect(e.target.value);
-          }
-        }}
+        onChange={onCategoriesChange}
       >
         <option key="all" value="all">
           all
         </option>
-        {filterCategories.map((category) => (
+        {categories.map((category) => (
           <option key={category.name} value={category.name}>
             {category.name}
           </option>

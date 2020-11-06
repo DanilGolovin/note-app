@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 
-import noteReducer from './Note/note.reducer';
-import categoryReducer from './Category/category.reducer';
+import notes from './Note/note.reducer';
+import categories from './Category/category.reducer';
+import auth from './Auth/auth.reducer';
 
 const rootReducer = combineReducers({
-  notes: noteReducer,
-  categories: categoryReducer,
+  notes,
+  categories,
+  auth,
 });
 
 export default rootReducer;

@@ -4,13 +4,12 @@ import Container from '../styles/Container.module.css';
 import Button from '../styles/Button.module.css';
 import Input from '../styles/Input.module.css';
 import Form from '../styles/Form.module.css';
+import Text from '../styles/Text.module.css';
+
 import PropTypes from 'prop-types';
 import { addCategory, deleteCategory } from '../redux/Category/category.actions';
 
 const CategoriesScreenProps = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
   dispatch: PropTypes.func,
   categories: PropTypes.array,
 };
@@ -36,6 +35,7 @@ function CategoriesScreen(props) {
 
     if (hasCategory()) setError('This category already exists!');
     else if (category === '') setError('Category should not be empty!');
+    else if (category.toLowerCase() === 'all') setError('You cannot create default category!');
     else {
       dispatch(addCategory({ name: category.toLowerCase() }));
       setCategory('');
@@ -50,7 +50,7 @@ function CategoriesScreen(props) {
   return (
     <div className={Container.center}>
       <h1>Add category</h1>
-      {error}
+      <p className={Text.error_message}>{error}</p>
       <form className={Form.wrapper} onSubmit={onSubmit}>
         <input
           className={Input.container}

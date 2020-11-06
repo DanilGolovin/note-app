@@ -1,27 +1,22 @@
-import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
-import HomeScreen from './screens/HomeScreen';
-import AddNoteScreen from './screens/AddNoteScreen';
-import UpdateNoteScreen from './screens/UpdateNoteScreen';
-import DetailNoteScreen from './screens/DetailNoteScreen';
-import CategoriesScreen from './screens/CategoriesScreen';
-
-import Header from './componets/Header';
+import AppRouter from './routers/AppRouter';
+import { useDispatch } from 'react-redux';
+import { authSuccess } from './redux/Auth/auth.actions';
+import { firebaseApp } from './firebase/firebase';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Header />
-      <>
-        <Route path="/" exact={true} component={HomeScreen} />
-        <Route path="/add-note" component={AddNoteScreen} />
-        <Route path="/update-note/:id" component={UpdateNoteScreen} />
-        <Route path="/detail-note/:id" component={DetailNoteScreen} />
-        <Route path="/categories" component={CategoriesScreen} />
-      </>
-    </BrowserRouter>
-  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(authSuccess({ email: user.email }));
+      }
+    });
+  }, [dispatch]);
+
+  return <AppRouter />;
 }
 
 export default App;
