@@ -6,15 +6,16 @@ import Input from '../styles/Input.module.css';
 import Form from '../styles/Form.module.css';
 import Text from '../styles/Text.module.css';
 
-import { addCategory, deleteCategory } from '../redux/Category/category.actions';
+import { startAddCategory, startDeleteCategory } from '../redux/Category/category.actions';
 import { defaultState } from '../types/default-state';
 import { Category } from '../types/category/category';
 
 function CategoriesScreen() {
   const dispatch = useDispatch();
+  const uid = useSelector((state: defaultState) => state.auth.user?.uid);
 
   const [filterCategories, setFilterCategories] = useState(
-    useSelector((state: defaultState) => state.categories),
+    useSelector((state: defaultState) => state.categories.categories),
   );
 
   const [categoryName, setCategoryName] = useState('');
@@ -39,22 +40,22 @@ function CategoriesScreen() {
     else if (categoryName === '') setError('Category should not be empty!');
     else if (categoryName.toLowerCase() === 'all') setError('You cannot create default category!');
     else {
-      dispatch(addCategory({ name: categoryName.toLowerCase() }));
+      uid && dispatch(startAddCategory( uid,  {name: categoryName.toLowerCase(), id: '' }));
       setCategoryName('');
       setError('');
 
-      setFilterCategories(filterCategories.concat({ name: categoryName }));
+      setFilterCategories(filterCategories.concat({ name: categoryName, id: '' }));
     }
   };
 
   const onDeleteCategoryClick = (category: Category): void => {
-    console.log(category);
-    dispatch(deleteCategory(category));
+    // console.log(category);
+    uid && dispatch(startDeleteCategory(uid, category.id));
     setFilterCategories(filterCategories.filter(({ name }) => name !== category.name));
   };
 
   return (
-    <div className={Container.center}>
+    <div className={Container.column_flex + " " + Container.align_center}>
       <h1>Add category</h1>
       <p className={Text.error_message}>{error}</p>
       <form className={Form.wrapper} onSubmit={onSubmit}>

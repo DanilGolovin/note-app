@@ -13,6 +13,7 @@ function App() {
       if (user && user.email !== '' && user.email !== null) {
         const userAuth: User = {
           email: user.email,
+          uid: user.uid
         };
         dispatch(user ? authSuccess(userAuth) : setAuthReady());
       }

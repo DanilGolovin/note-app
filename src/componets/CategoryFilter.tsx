@@ -1,42 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Category } from '../types/category/category';
-import { useSelector } from 'react-redux';
-import { defaultState } from '../types/default-state';
 
 type Props = {
-  onCategorySelect: (category: string) => void;
+  categories: Category[];
+  onCategorySelect: (filterCategory: Category) => void;
   filterClass: string;
 };
 
-function CategoryFilter({ onCategorySelect, filterClass }: Props) {
-  const categories = useSelector((state: defaultState) => state.categories);
-  const [currentCategory, setCurrentCategory] = useState('all');
+export const defaultCategory: Category = {
+  name: 'all',
+  id: 'all',
+}
 
-  useEffect(() => {
-    if (onCategorySelect) {
-      onCategorySelect(currentCategory);
-    }
-  }, [currentCategory, onCategorySelect]);
+function CategoryFilter({ categories, onCategorySelect, filterClass }: Props) {
+  const [currentCategory, setCurrentCategory] = useState(defaultCategory);
 
   const onCategoriesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setCurrentCategory(e.target.value);
-    if (onCategorySelect) {
-      onCategorySelect(e.target.value);
-    }
+      const category = categories.find(category => category.id === e.currentTarget.value)
+      console.log(' onCategoriesChange : ', e)
+      if (!category) return
+      setCurrentCategory(category);
+      onCategorySelect(category);  
   };
 
   return (
     <select
       className={filterClass ? filterClass : ''}
-      defaultValue="all"
       name={'Categories'}
+      value={currentCategory.id}
       onChange={onCategoriesChange}
     >
       <option key="all" value="all">
         all
       </option>
       {categories.map((category: Category) => (
-        <option key={category.name} value={category.name}>
+        <option key={category.id} value={category.id}>
           {category.name}
         </option>
       ))}

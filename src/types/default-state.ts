@@ -1,9 +1,9 @@
 import { Auth } from './auth/auth';
-import { Note } from './note/note';
-import { Category } from './category/category';
+import { NotesState } from '../redux/Note/note.reducer';
+import { CategoryState } from '../redux/Category/category.reducer';
 
 export type defaultState = {
-  notes: Note[];
-  categories: Category[];
+  notes: NotesState;
+  categories: CategoryState;
   auth: Auth;
 };

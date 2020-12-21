@@ -4,7 +4,7 @@ import Button from '../styles/Button.module.css';
 import Container from '../styles/Container.module.css';
 import { useHistory, useParams } from 'react-router';
 import NoteForm from '../componets/NoteForm';
-import { deleteNote, updateNote } from '../redux/Note/note.actions';
+import { startDeleteNote, startUpdateNote } from '../redux/Note/note.actions';
 import { Note } from '../types/note/note';
 import { defaultState } from '../types/default-state';
 
@@ -13,22 +13,25 @@ const UpdateNoteScreen = () => {
   const { id }: { id: string } = useParams();
   const dispatch = useDispatch();
 
-  const notes = useSelector((state: defaultState) => state.notes);
+  const notes = useSelector((state: defaultState) => state.notes.notes);
+  const uid = useSelector((state: defaultState) => state.auth.user?.uid);
 
   const note = useMemo(() => notes.find((note: Note) => note.id === id), [id, notes]);
 
+  console.log('note in UpdateNoteScreen : ', note)
+
   const onSubmit = (note: Note) => {
-    dispatch(updateNote(note));
+    note && uid && dispatch(startUpdateNote(note, uid));
     history.push('/');
   };
 
   const onDeleteClick = () => {
-    if (note) dispatch(deleteNote(note.id));
+    note && uid && dispatch(startDeleteNote(note.id, uid));
     history.push('/');
   };
 
   return (
-    <div className={Container.center}>
+    <div className={Container.column_flex + " " + Container.align_center}>
       <NoteForm
         actionName={'Update note'}
         formTitle={'Update note'}
@@ -39,7 +42,7 @@ const UpdateNoteScreen = () => {
       />
       <button
         className={Button.primary_btn + ' ' + Button.delete_btn + ' ' + Button.btn__with_margin}
-        onClick={() => onDeleteClick()}
+        onClick={onDeleteClick}
       >
         REMOVE
       </button>

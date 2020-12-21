@@ -12,8 +12,11 @@ type Props = {
 const LoadingWrapper = ({ children }: Props) => {
   const isLoading = useSelector((state: defaultState) => state.auth.loading);
   const isAuthReady = useSelector((state: defaultState) => state.auth.isAuthReady);
+  const isAuthenticated = useSelector((state: defaultState) => state.auth.isAuthenticated);
 
-  return isLoading || !isAuthReady ? <Loader /> : children;
+  if (isLoading) return  <Loader /> 
+  else if (!isAuthReady && !isAuthenticated) return <Loader/>
+  else return children
 };
 
 export default LoadingWrapper;

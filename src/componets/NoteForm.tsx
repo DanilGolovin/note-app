@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-// @ts-ignore
-import { v4 as uuidv4 } from 'uuid';
 import Container from '../styles/Container.module.css';
 import Form from '../styles/Form.module.css';
 import CategoryFilter from './CategoryFilter';
 import Input from '../styles/Input.module.css';
 import Button from '../styles/Button.module.css';
 import { Note } from '../types/note/note';
+import { defaultState } from '../types/default-state';
+import { useSelector } from 'react-redux';
+
+import {defaultCategory} from './CategoryFilter'
+import { Category } from '../types/category/category';
 
 type Props = {
   note?: Note;
@@ -16,13 +19,15 @@ type Props = {
 };
 
 function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
+  const categories = useSelector((state: defaultState) => state.categories.categories);
   const [title, setTitle] = useState(note ? note.title : '');
   const [description, setDescription] = useState(note ? note.description : '');
   const [inputError, setInputError] = useState('');
-  const [category, setCategory] = useState('');
+  const [filterCategory, setFilterCategory] = useState(defaultCategory);
 
-  const onCategoryChoose = (category: string) => {
-    setCategory(category);
+
+  const onCategoryChoose = (filterCategory: Category) => {
+    setFilterCategory(filterCategory);
   };
 
   const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -39,8 +44,8 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
     const data: Note = {
       title: title,
       description: description,
-      category: category ? category : 'all',
-      id: note ? note.id : uuidv4(),
+      category: filterCategory,
+      id: note?.id || ''
     };
 
     onSubmitForm(data);
@@ -50,7 +55,7 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (title === '' || description === '' || category === '') {
+    if (title === '' || description === '') {
       setInputError('Please provide title and description.');
     } else {
       giveValidNote();
@@ -77,7 +82,7 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
           onChange={onDescriptionChange}
           required={true}
         />
-        <CategoryFilter onCategorySelect={onCategoryChoose} filterClass={Input.container} />
+        <CategoryFilter categories={categories} onCategorySelect={onCategoryChoose} filterClass={Input.container} />
         <button className={Button.primary_btn}>{actionName}</button>
       </form>
     </div>

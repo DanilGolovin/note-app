@@ -46,11 +46,14 @@ const reducer: Reducer<typeof INITIAL_STATE, AuthActions> = (state = INITIAL_STA
       };
     }
     case AUTH_SUCCESS: {
-      const { user } = action.payload;
-
+      const { uid, email } = action.payload.user;
+     
       return {
         ...state,
-        user,
+        user : {
+          uid,
+          email,
+        },
         isAuthenticated: true,
         isAuthReady: true,
         loading: false,

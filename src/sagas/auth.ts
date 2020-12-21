@@ -23,7 +23,9 @@ export function* loginSaga(action: ReturnType<typeof authLogin>) {
 
     console.log('response: ', response);
 
-    yield put(authSuccess(response.user));
+    const { uid } = response.user
+
+    yield put(authSuccess({uid, email}));
   } catch (error) {
     yield put(authError(error.message));
   }
@@ -36,8 +38,10 @@ export function* signupSaga(action: ReturnType<typeof authSignup>) {
   try {
     // @ts-ignore
     const response = yield call([firebaseAuth, 'createUserWithEmailAndPassword'], email, password);
-    console.log('response: ', response);
-    yield put(authSuccess(response));
+   
+    const { uid } = response.user
+
+    yield put(authSuccess({uid, email}));
   } catch (error) {
     yield put(authError(error.message));
   }

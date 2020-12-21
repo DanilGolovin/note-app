@@ -6,23 +6,24 @@ import { useSelector } from 'react-redux';
 import { defaultState } from '../types/default-state';
 
 type Props = {
-  categoryName?: string;
+  categoryName: string;
 };
 
 const NoteList = ({ categoryName }: Props) => {
-  const notes = useSelector((state: defaultState) => state.notes);
+  const notes = useSelector((state: defaultState) => state.notes.notes);
   const [listNotes, setListNotes] = useState(notes);
 
   useEffect(() => {
+    console.log('useEffect in NoteList : ', categoryName)
     if (categoryName === 'all') setListNotes(notes);
-    else setListNotes(notes?.filter((note: Note) => note.category === categoryName));
+    else setListNotes(notes?.filter((note: Note) => note.category.name === categoryName));
   }, [categoryName, notes]);
 
   return (
     <div className={Container.note_list}>
-      {listNotes?.length !== 0
+      {listNotes?.length > 0
         ? listNotes?.map((note: Note) => {
-            return <NoteListItem key={note.id} {...note} />;
+            return <NoteListItem key={note.id} note={note} />;
           })
         : 'no note'}
     </div>

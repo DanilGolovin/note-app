@@ -90,3 +90,31 @@
 .error_hidden {
     display: none;
 }
+
+.customizationIconWrapper {
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.column_flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.align_center {
+    align-items: center;
+}
+
+.relative {
+    position: relative;
+}
+
+.createThemeWrapper {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
