@@ -1,6 +1,6 @@
 import React from 'react';
 import NoteCss from '../styles/NoteItem.module.css';
-import Container from '../styles/Container.module.css';
+import NoteComponent from '../componets/Note';
 import { useHistory } from 'react-router';
 import { Note } from '../types/note/note';
 
@@ -18,15 +18,11 @@ const NoteListItem = ({note} : Props) => {
 
   return (
     <div className={NoteCss.detail_link} onClick={(e) => onNoteClick(e, 'detail')}>
-      <div className={NoteCss.container}>
-        <h2 className={NoteCss.title}>{note.title}</h2>
-        <p className={NoteCss.description}>{note.description}</p>
-        <div className={Container.center}>
-          <div className={NoteCss.link} onClick={(e) => onNoteClick(e, 'update')}>
-            <span className={NoteCss.edit_link} />
-          </div>
+      <NoteComponent title={note.title} description={note.description}>
+        <div className={NoteCss.link} onClick={(e) => onNoteClick(e, 'update')}>
+          <span className={NoteCss.edit_link} />
         </div>
-      </div>
+      </NoteComponent>    
     </div>
   );
 };

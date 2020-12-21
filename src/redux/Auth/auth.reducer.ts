@@ -12,15 +12,35 @@ import {
 import { AuthActions } from './auth.actions';
 import { Reducer } from 'redux';
 
-const INITIAL_STATE = {
+type AuthType = {
+  loading: boolean,
+  error: {
+    hasError?: boolean,
+    errorMessage?: string,
+  },
+  user: {
+    uid?: string
+    email?: string,
+  },
+  isAuthenticated: boolean,
+  isAuthReady: boolean,
+}
+
+const INITIAL_STATE: AuthType = {
   loading: false,
-  error: {},
-  user: {},
+  error: {
+    hasError: false,
+    errorMessage: ''
+  },
+  user: {
+    uid: '',
+    email: ''
+  },
   isAuthenticated: false,
   isAuthReady: false,
 };
 
-const reducer: Reducer<typeof INITIAL_STATE, AuthActions> = (state = INITIAL_STATE, action) => {
+const reducer: Reducer<AuthType, AuthActions> = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case AUTH_LOGIN_USER:
       return {

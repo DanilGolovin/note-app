@@ -22,9 +22,9 @@ const NoteList = ({ categoryName }: Props) => {
   return (
     <div className={Container.note_list}>
       {listNotes?.length > 0
-        ? listNotes?.map((note: Note) => {
-            return <NoteListItem key={note.id} note={note} />;
-          })
+        ? listNotes?.map((note: Note) => (
+            <NoteListItem key={note.id} note={note} />
+          ))
         : 'no note'}
     </div>
   );

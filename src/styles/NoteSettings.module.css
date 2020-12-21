@@ -1,9 +1,45 @@
 .sidebar {
     height: 100%;
     width: 300px;
+    overflow-y: auto;
     background: whitesmoke;
+    padding: 20px;
     display: flex;
-    flex-direction: column; position: absolute;
+    flex-direction: column;
+     position: absolute;
     right: 0;
     top: 0;
 }
+
+.color {
+    width: 36px;
+    height: 14px;
+    border-radius: 2px;
+}
+
+.swatch {
+    padding: 5px;
+    background: #fff;
+    border-radius: 1px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.popover {
+    position: absolute;
+    z-index: 2;
+};
+
+.cover {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+/* .save_btn_wrapper {
+    display: ;
+} */

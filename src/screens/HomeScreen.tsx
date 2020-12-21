@@ -21,7 +21,7 @@ const HomeScreen = () => {
   const uid = useSelector((state: defaultState) => state.auth.user?.uid);
   const loading = useSelector((state: defaultState) => state.notes.loading);
   const categories = useSelector((state: defaultState) => state.categories.categories);
-
+  
   const onCategoryChoose = (filterCategory: Category) => {
     setCategory(filterCategory);
   };
