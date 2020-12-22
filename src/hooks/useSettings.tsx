@@ -19,7 +19,7 @@ function useSettings() {
   const onSaveSettings = useCallback(() => {
     dispatch(startSaveNoteTheme());
     history.push('/')
-  }, [dispatch]);
+  }, [dispatch, history]);
 
 //   const onUpdateSettings = useCallback((payload: UpdateSettingsPayload) => dispatch(updateSettings(payload)), [dispatch]);
 

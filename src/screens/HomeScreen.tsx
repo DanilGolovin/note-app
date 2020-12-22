@@ -28,7 +28,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     uid && (dispatch(startGetNotes(uid)), dispatch(startGetCategories(uid)));
-  }, [dispatch]);
+  }, [dispatch, uid]);
 
   return (
     <>

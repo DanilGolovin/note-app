@@ -6,7 +6,7 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-     position: absolute;
+    position: absolute;
     right: 0;
     top: 0;
 }
@@ -39,7 +39,3 @@
     bottom: 0px;
     left: 0px;
 }
-
-/* .save_btn_wrapper {
-    display: ;
-} */

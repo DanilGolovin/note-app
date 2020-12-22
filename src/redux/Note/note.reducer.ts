@@ -57,15 +57,9 @@ const reducer: Reducer<typeof INITIAL_STATE, NoteActions> = (state = INITIAL_STA
       }
     }
     case ADD_NOTE: {
-      const notes = state.notes
-      const note = action.payload.note
-      note.id = action.payload.id
-
-      notes.push(note)
-      
       return {
         ...state,
-        notes: notes,
+        notes: [...state.notes, {...action.payload.note, id: action.payload.id}],
         loading: false,
       }
     }

@@ -17,7 +17,7 @@ const NoteList = ({ categoryName }: Props) => {
     console.log('useEffect in NoteList : ', categoryName)
     if (categoryName === 'all') setListNotes(notes);
     else setListNotes(notes?.filter((note: Note) => note.category.name === categoryName));
-  }, [categoryName, notes]);
+  }, [categoryName, notes, setListNotes]);
 
   return (
     <div className={Container.note_list}>

@@ -89,8 +89,9 @@ import {
       //   }
       // }
       case UPDATE_NOTE_THEME: {
-        console.log(' action.payload (UPDATE_NOTE_THEME) ' , action.payload)
-        const settings = {...state.settings, [action.payload.name]: action.payload.value}
+        const { name, value } = action.payload
+
+        const settings = {...state.settings, [name]: value}
         return {
           ...state,
           settings

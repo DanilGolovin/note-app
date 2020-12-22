@@ -22,7 +22,7 @@ const reducer: Reducer<typeof INITIAL_STATE, CategoryActions> = (state = INITIAL
       }
     }
     case GET_CATEGORIES: {
-      const categories = action.payload.categories
+      const { categories } = action.payload
 
       return {
         ...state,
@@ -37,15 +37,10 @@ const reducer: Reducer<typeof INITIAL_STATE, CategoryActions> = (state = INITIAL
       }
     }
     case ADD_CATEGORY: {
-      const categories = state.categories
-      const category = action.payload.category
-      category.id = action.payload.id
-      
-      categories.push(category)
-
+    
       return {
         ...state,
-        categories,
+        categories: [...state.categories, {...action.payload.category, id: action.payload.id}],
         loading: false,
       }
     }

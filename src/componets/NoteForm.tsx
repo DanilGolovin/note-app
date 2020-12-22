@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux';
 
 import {defaultCategory} from './CategoryFilter'
 import { Category } from '../types/category/category';
+import CustomizationField from './CustomizationField';
+import useSettings from '../hooks/useSettings';
 
 type Props = {
   note?: Note;
@@ -25,6 +27,7 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
   const [inputError, setInputError] = useState('');
   const [filterCategory, setFilterCategory] = useState(defaultCategory);
 
+  const { settings } = useSettings()
 
   const onCategoryChoose = (filterCategory: Category) => {
     setFilterCategory(filterCategory);
@@ -61,31 +64,49 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
       giveValidNote();
     }
   };
-
+ 
   return (
-    <div className={Container.center}>
-      <h1>{formTitle}</h1>
-      <p>{inputError}</p>
-      <form className={Form.wrapper} onSubmit={onSubmit}>
-        <input
-          className={Input.container}
-          type="text"
-          placeholder="title"
-          value={title}
-          onChange={onTitleChange}
-          required={true}
-        />
-        <textarea
-          className={Input.container}
-          value={description}
-          placeholder="description"
-          onChange={onDescriptionChange}
-          required={true}
-        />
-        <CategoryFilter categories={categories} onCategorySelect={onCategoryChoose} filterClass={Input.container} />
-        <button className={Button.primary_btn}>{actionName}</button>
-      </form>
-    </div>
+    <>
+      <div className={Container.center} style={{backgroundColor: `${settings.backgroundColor}`}}>
+        <h1>{formTitle}</h1>
+        <p>{inputError}</p>
+        <form className={Form.wrapper} >
+          <div>
+            <input
+              className={Input.container}
+              type="text"
+              placeholder="title"
+              value={title}
+              onChange={onTitleChange}
+              required={true}
+              style={{
+                fontSize: `${settings.titleFontSize}px`, 
+                color: `${settings.titleFontColor}`,
+              }}
+            />
+            <textarea
+              className={Input.container}
+              value={description}
+              placeholder="description"
+              onChange={onDescriptionChange}
+              required={true}
+              style={{
+                fontSize: `${settings.descriptionFontSize}px`,
+                color: `${settings.descriptionFontColor}`,
+              }}
+            />
+          </div>
+          <CategoryFilter categories={categories} onCategorySelect={onCategoryChoose} filterClass={Input.container} />
+          
+        </form>
+      </div>
+      <div style={{padding: "20px"}}>
+        <CustomizationField fieldName="backgroundColor" title="Note background color" type="color-picker" />
+        <CustomizationField fieldName="titleFontColor" title="Title color" type="color-picker" />
+        <CustomizationField fieldName="descriptionFontColor" title="Description color" type="color-picker" />
+      </div>
+      <button className={Button.primary_btn} onClick={onSubmit} >{actionName}</button>
+    </>
   );
 }
 
