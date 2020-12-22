@@ -1,36 +1,39 @@
 import { put, call, takeLatest, all } from 'redux-saga/effects';
 
-import { saveNoteTheme } from "../redux/NoteTheme/note.theme.actions";
+import { getNoteThemes, saveNoteTheme } from "../redux/NoteTheme/note.theme.actions";
 import store from "../redux/store";
 
 import { databaseRef } from '../firebase/firebase'; 
-import { START_SAVE_NOTE_THEME } from '../redux/NoteTheme/note.theme.types';
+import { START_GET_NOTE_THEMES, START_SAVE_NOTE_THEME } from '../redux/NoteTheme/note.theme.types';
 // import { startDeleteNote } from '../redux/Note/note.actions';
 // import { addNoteTheme, deleteNoteTheme, getNoteThemes, startAddNoteTheme, startGetNoteThemes, startUpdateNoteTheme, updateNoteTheme } from '../redux/NoteTheme/note.theme.actions';
 // import { START_ADD_NOTE_THEME, START_DELETE_NOTE_THEME, START_GET_NOTE_THEMES, START_UPDATE_NOTE_THEME } from '../redux/NoteTheme/note.theme.types';
 
-// export function* getNoteThemesSaga(action: ReturnType<typeof startGetNoteThemes>) {
-//     const uid = action.payload.uid
+export function* getNoteThemesSaga( ) {
+    const state = store.getState()
+    const uid = state.auth.user.uid
 
-//     try {
-//         const noteThemesRef = databaseRef.child(`users/${uid}/note-themes`)
+    try {
+        const noteThemesRef = databaseRef.child(`users/${uid}/note-themes`)
       
-//         const snapshot = yield call([noteThemesRef, "once"], 'value');
-//         const noteThemes:any = [] 
+        const snapshot = yield call([noteThemesRef, "once"], 'value');
+        const noteThemes:any = [] 
         
-//         snapshot.forEach((childSnapshot: any) => { // вызываеться один раз для каждого child
-//             noteThemes.push({
-//                 id: childSnapshot.key,
-//                 ...childSnapshot.val()
-//             })
-//         })
-//         console.log('get note themes, response from database: ', noteThemes)
+        snapshot.forEach((childSnapshot: any) => { // вызываеться один раз для каждого child
+            const id = childSnapshot.key 
+            const { theme } = childSnapshot.val()
+            noteThemes.push({
+                ...theme,
+                id,
+            })
+        })
+        console.log('get note themes, response from database: ', noteThemes)
     
-//         yield put(getNoteThemes(noteThemes));
-//     } catch (error) {
-//         console.log('Get note themes error: ', error)
-//     }
-// }
+        yield put(getNoteThemes(noteThemes));
+    } catch (error) {
+        console.log('Get note themes error: ', error)
+    }
+}
 
 // export function* addNoteThemeSaga(action: ReturnType<typeof startAddNoteTheme>) {
 //     const { noteTheme, uid } = action.payload
@@ -87,17 +90,17 @@ export function* saveThemeSaga() {
     const theme = state.noteTheme.settings
 
     try {
-        const noteThemeRef = databaseRef.child(`users/${uid}/note-theme/`)
+        const noteThemeRef = databaseRef.child(`users/${uid}/note-themes`)
       
-        yield call([noteThemeRef, "push"], 
+        const response =  yield call([noteThemeRef, "push"], 
         {
             theme
         }
         );
         
-        console.log('Saved note theme!')
+        console.log('Saved note theme! response: ', response)
 
-        yield put(saveNoteTheme(true));
+        yield put(saveNoteTheme(response.key));
     } catch (error) {
         console.log('Save note theme error: ', error)
     }
@@ -106,6 +109,7 @@ export function* saveThemeSaga() {
 export default function* () {
     // @ts-ignore
   yield all[
-    (yield takeLatest(START_SAVE_NOTE_THEME, saveThemeSaga))
+    yield takeLatest(START_SAVE_NOTE_THEME, saveThemeSaga),
+    yield takeLatest(START_GET_NOTE_THEMES, getNoteThemesSaga)
   ];
 }

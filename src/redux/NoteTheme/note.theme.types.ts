@@ -17,3 +17,6 @@ export const UPDATE_NOTE_THEME = 'UPDATE_NOTE_THEME' as const;
 export const START_SAVE_NOTE_THEME = 'START_SAVE_NOTE_THEME' as const;
 
 export const SAVE_NOTE_THEME = 'SAVE_NOTE_THEME' as const;
+
+export const SELECT_THEME = 'SELECT_THEME' as const;
+

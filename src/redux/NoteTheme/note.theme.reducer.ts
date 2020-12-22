@@ -1,14 +1,15 @@
 import { 
     // ADD_NOTE_THEME,
     // DELETE_NOTE_THEME,
-    // GET_NOTE_THEMES,
+    GET_NOTE_THEMES,
     // START_ADD_NOTE_THEME,
     // START_DELETE_NOTE_THEME,
-    // START_GET_NOTE_THEMES,
+    START_GET_NOTE_THEMES,
     // START_UPDATE_NOTE_THEME, 
     UPDATE_NOTE_THEME,
     START_SAVE_NOTE_THEME,
     SAVE_NOTE_THEME,
+    SELECT_THEME,
   } from './note.theme.types';
   
   import { Reducer } from 'redux';
@@ -24,24 +25,34 @@ import {
     titleFontColor: 'rgba(0, 0, 0, 100)',
     descriptionFontColor: 'rgba(0, 0, 0, 100)',
     backgroundColor: 'rgba(255, 255, 255, 100)',
-    boxShadow: ''
+    boxShadow: '',
+    id: '',
   }
 
   export type SettingsType = typeof settings
 
-  const INITIAL_STATE = {
+  type ThemeType = SettingsType
+
+  export type NoteThemesType = {
+    settings: SettingsType,
+    themes: ThemeType[],
+    loading: boolean,
+  }
+
+  const INITIAL_STATE: NoteThemesType = {
     settings: settings,
+    themes: [],
     loading: false
   }
   
-  const reducer: Reducer<typeof INITIAL_STATE, NoteThemeActions> = (state = INITIAL_STATE, action) => {
+  const reducer: Reducer<NoteThemesType, NoteThemeActions> = (state = INITIAL_STATE, action) => {
     switch (action.type) {  
-      // case START_GET_NOTE_THEMES: {
-      //   return {
-      //     ...state,
-      //     loading: true
-      //   }
-      // }
+      case START_GET_NOTE_THEMES: {
+        return {
+          ...state,
+          loading: true
+        }
+      }
       // case START_ADD_NOTE_THEME: {
       //   return {
       //     ...state,
@@ -60,13 +71,13 @@ import {
       //     loading: true,
       //   }
       // }  
-      // case GET_NOTE_THEMES: {
-      //   return {
-      //     ...state,
-      //     loading: false,  
-      //     noteThemes: action.payload.noteThemes
-      //   }
-      // }
+      case GET_NOTE_THEMES: {
+        return {
+          ...state,
+          loading: false,  
+          themes: action.payload.noteThemes
+        }
+      }
       // case ADD_NOTE_THEME: {
       //   const noteThemes = state.noteThemes
       //   const noteTheme = action.payload.noteTheme
@@ -105,14 +116,27 @@ import {
       }
 
       case SAVE_NOTE_THEME: {
-        if (action.payload.isSaved) {
+        const { id } = action.payload
+        if (id) {
           return {
             ...state,
-            loading: false
+            themes: [...state.themes, {...state.settings, id}],
+            loading: false,
+            settings: settings
           }
-        } else return {...state,
-          loading: false,
-          settings: settings}
+        } else return {
+            ...state,
+            loading: false,
+            settings: settings
+          }
+      }
+      case SELECT_THEME: {
+        const { id } = action.payload
+        const selectedTheme = state.themes.find(theme => theme.id === id)
+        return {
+          ...state,
+          settings: selectedTheme || settings
+        }
       }
       default:
         return state;

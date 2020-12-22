@@ -31,7 +31,7 @@ const UpdateNoteScreen = () => {
   };
 
   return (
-    <div className={Container.column_flex + " " + Container.align_center}>
+    <div className={Container.updateNoteForm}>
       <NoteForm
         actionName={'Update note'}
         formTitle={'Update note'}

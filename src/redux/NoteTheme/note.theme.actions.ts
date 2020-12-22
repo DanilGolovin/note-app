@@ -9,14 +9,14 @@ import {
     UPDATE_NOTE_THEME,
     START_SAVE_NOTE_THEME,
     SAVE_NOTE_THEME,
+    SELECT_THEME
     // SAVE_NOTE_THEME,
     
 } from './note.theme.types';
   
   
-  export const startGetNoteThemes = (uid: string) => ({
+  export const startGetNoteThemes = () => ({
     type: START_GET_NOTE_THEMES,
-    payload: { uid },
   });
   
   export const startAddNoteTheme = (noteTheme: any, uid: string) => ({
@@ -58,9 +58,14 @@ import {
     type: START_SAVE_NOTE_THEME
   })
 
-  export const saveNoteTheme = (isSaved: boolean) => ({
+  export const saveNoteTheme = (id: string) => ({
     type: SAVE_NOTE_THEME,
-    payload: { isSaved }
+    payload: { id }
+  })
+  
+  export const selelectTheme = (id: string) => ({
+    type: SELECT_THEME,
+    payload: { id },
   })
 
   export type NoteThemeActions = ReturnType<
@@ -73,6 +78,7 @@ import {
     typeof updateNoteTheme |
     typeof addNoteTheme | 
     typeof startSaveNoteTheme |
-    typeof saveNoteTheme
+    typeof saveNoteTheme |
+    typeof selelectTheme
   >;
   

@@ -16,11 +16,13 @@ import { NoteActions } from './note.actions';
 export interface NotesState {
   notes: Note[],
   loading: boolean,
+  themeId: string,
 }
 
 const  INITIAL_STATE: NotesState = {
   notes: [],
-  loading: false
+  loading: false,
+  themeId: '',
 }
 
 const reducer: Reducer<typeof INITIAL_STATE, NoteActions> = (state = INITIAL_STATE, action) => {

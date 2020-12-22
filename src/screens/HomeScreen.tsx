@@ -13,6 +13,7 @@ import { startGetCategories } from '../redux/Category/category.actions';
 import { Category } from '../types/category/category';
 
 import CustomizationIcon from "../icons/customization.svg"
+import { startGetNoteThemes } from '../redux/NoteTheme/note.theme.actions';
 
 const HomeScreen = () => {
   const [category, setCategory] = useState(defaultCategory);
@@ -27,7 +28,7 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    uid && (dispatch(startGetNotes(uid)), dispatch(startGetCategories(uid)));
+    uid && (dispatch(startGetNotes(uid)), dispatch(startGetCategories(uid)), dispatch(startGetNoteThemes()));
   }, [dispatch, uid]);
 
   return (

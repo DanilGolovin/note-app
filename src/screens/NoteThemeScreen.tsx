@@ -6,6 +6,7 @@ import Button from '../styles/Button.module.css';
 import CustomizationField from '../componets/CustomizationField';
 import useSettings from '../hooks/useSettings';
 import Modal from '../componets/Modal';
+import ThemeList from '../componets/ThemeList';
 
 // SettingsType
 
@@ -25,7 +26,11 @@ const NoteThemeScreen = () => {
                     </div>
                     <div>
                         <h4>Saved themes:</h4>
-
+                        <div className={Container.themeListWrapper}>
+                            <div className={Container.themeListContainer}>
+                                <ThemeList />
+                            </div>
+                        </div>
                     </div>
                     <div className={NoteSettings.sidebar}>
                         <CustomizationField fieldName="height" title="Height" type="size" min={100} />
