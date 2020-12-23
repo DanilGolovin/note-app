@@ -90,3 +90,53 @@
 .error_hidden {
     display: none;
 }
+
+.customizationIconWrapper {
+    cursor: pointer;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.column_flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.align_center {
+    align-items: center;
+}
+
+.relative {
+    position: relative;
+}
+
+.createThemeWrapper {
+    display: flex;
+    flex-basis: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.updateNoteForm {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.themeListWrapper {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 60%;
+    margin: auto;
+    height: 100px;
+}
+
+.themeListContainer {
+    position: absolute;
+    display: flex;
+    width: fit-content;
+}
+

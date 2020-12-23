@@ -24,6 +24,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
-.eslintrc.js
-.prettierrc
 .swp
