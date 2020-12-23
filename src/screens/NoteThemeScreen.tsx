@@ -7,22 +7,28 @@ import CustomizationField from '../componets/CustomizationField';
 import useSettings from '../hooks/useSettings';
 import Modal from '../componets/Modal';
 import ThemeList from '../componets/ThemeList';
+import { useDispatch } from 'react-redux';
+import { startDeleteNoteTheme } from '../redux/NoteTheme/note.theme.actions';
 
 // SettingsType
 
 const NoteThemeScreen = () => {
-    const { onSaveSettings } = useSettings()
+    const dispatch = useDispatch()
+    const { settings, onSaveSettings, onUpdateTheme } = useSettings()
 
     const [showModal, setShowModal] = React.useState(false);
 
-   
+    const onDeleteThemeBtnClick = (id: string) => {
+        dispatch(startDeleteNoteTheme(id))
+    }
+
     return (
         <div style={{display: 'flex', justifyContent: 'center', height: "100%", position: "relative"}}>
             <div className={Container.main}>
                 <div style={{height: "100%"}} >
                     <div className={Container.createThemeWrapper}>
                         <h2>Create your theme</h2>
-                        <Note />
+                        <Note themeSettings={settings} />
                     </div>
                     <div>
                         <h4>Saved themes:</h4>
@@ -45,7 +51,13 @@ const NoteThemeScreen = () => {
 
                         <div className={Container.center}>
                             <button className={Button.btn + " " + Button.primary_btn} onClick={() => setShowModal(true)}>
-                                Save theme
+                                {settings.id !== '' ? "Save theme" : "Update theme"}
+                            </button>
+                            <button
+                                className={Button.btn + " " + Button.primary_btn + " " + Button.delete_btn}
+                                onClick={() => onDeleteThemeBtnClick(settings.id)}
+                            >
+                                Delete theme
                             </button>
                         </div>
                         {showModal && (
@@ -56,7 +68,8 @@ const NoteThemeScreen = () => {
                                         className={Button.btn + " " + Button.primary_btn}
                                         onClick={() => {
                                             setShowModal(false)
-                                            onSaveSettings()
+                                            if (settings.id) onUpdateTheme(true)
+                                            else onSaveSettings(true)
                                         }}
                                     >
                                         yes
@@ -65,6 +78,8 @@ const NoteThemeScreen = () => {
                                         className={Button.btn + " " + Button.primary_btn}
                                         onClick={() => {
                                             setShowModal(false)
+                                            if (settings.id) onUpdateTheme()
+                                            else onSaveSettings()
                                         }}
                                     >
                                         no

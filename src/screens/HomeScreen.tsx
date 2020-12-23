@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import NoteList from '../componets/NoteList';
 import Input from '../styles/Input.module.css';
 import Container from '../styles/Container.module.css';
 import Button from '../styles/Button.module.css';
 import CategoryFilter, { defaultCategory } from '../componets/CategoryFilter';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { defaultState } from '../types/default-state';
-import { startGetNotes } from '../redux/Note/note.actions';
 import Loader from '../componets/Loader';
-import { startGetCategories } from '../redux/Category/category.actions';
 import { Category } from '../types/category/category';
 
 import CustomizationIcon from "../icons/customization.svg"
-import { startGetNoteThemes } from '../redux/NoteTheme/note.theme.actions';
 
 const HomeScreen = () => {
   const [category, setCategory] = useState(defaultCategory);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const uid = useSelector((state: defaultState) => state.auth.user?.uid);
+  // const uid = useSelector((state: defaultState) => state.auth.user?.uid);
   const loading = useSelector((state: defaultState) => state.notes.loading);
   const categories = useSelector((state: defaultState) => state.categories.categories);
   
@@ -27,9 +24,9 @@ const HomeScreen = () => {
     setCategory(filterCategory);
   };
 
-  useEffect(() => {
-    uid && (dispatch(startGetNotes(uid)), dispatch(startGetCategories(uid)), dispatch(startGetNoteThemes()));
-  }, [dispatch, uid]);
+  // useEffect(() => {
+  //   uid && (dispatch(startGetNoteThemes()));
+  // }, [dispatch, uid]);
 
   return (
     <>

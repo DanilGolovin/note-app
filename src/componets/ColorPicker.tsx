@@ -28,6 +28,7 @@ const ColorPicker = ({name} : PickerProps) => {
     };
 
     const handleChange = (color: ColorResult) => {
+        //@ts-ignore
         onUpdateSettings(name, convertFromRGB(color.rgb))
     };
     
