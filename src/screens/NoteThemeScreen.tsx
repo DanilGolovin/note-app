@@ -51,7 +51,7 @@ const NoteThemeScreen = () => {
 
                         <div className={Container.center}>
                             <button className={Button.btn + " " + Button.primary_btn} onClick={() => setShowModal(true)}>
-                                {settings.id !== '' ? "Save theme" : "Update theme"}
+                                {settings.id === '' ? "Save theme" : "Update theme"}
                             </button>
                             <button
                                 className={Button.btn + " " + Button.primary_btn + " " + Button.delete_btn}
@@ -68,7 +68,7 @@ const NoteThemeScreen = () => {
                                         className={Button.btn + " " + Button.primary_btn}
                                         onClick={() => {
                                             setShowModal(false)
-                                            if (settings.id) onUpdateTheme(true)
+                                            if (settings.id !== "") onUpdateTheme(true)
                                             else onSaveSettings(true)
                                         }}
                                     >
@@ -78,7 +78,7 @@ const NoteThemeScreen = () => {
                                         className={Button.btn + " " + Button.primary_btn}
                                         onClick={() => {
                                             setShowModal(false)
-                                            if (settings.id) onUpdateTheme()
+                                            if (settings.id !== "") onUpdateTheme()
                                             else onSaveSettings()
                                         }}
                                     >
