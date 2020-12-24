@@ -3,7 +3,6 @@ import {
   ADD_NOTE,
   DELETE_NOTE,
   UPDATE_NOTE,
-  START_GET_NOTES,
   START_ADD_NOTE,
   START_DELETE_NOTE,
   START_UPDATE_NOTE
@@ -12,10 +11,6 @@ import {
 import { Note } from '../../types/note/note';
 
 
-export const startGetNotes = (uid: string) => ({
-  type: START_GET_NOTES,
-  payload: { uid },
-});
 
 export const startAddNote = (note: Note, uid: string) => ({
   type: START_ADD_NOTE,
@@ -53,7 +48,6 @@ export const updateNote = (note: Note) => ({
 });
 
 export type NoteActions = ReturnType<
-  typeof startGetNotes |
   typeof getNotes |
   typeof startAddNote |
   typeof startDeleteNote |

@@ -5,7 +5,6 @@ import {
   START_ADD_NOTE,
   START_DELETE_NOTE,
   START_UPDATE_NOTE,
-  START_GET_NOTES,
   GET_NOTES
 } from './note.types';
 
@@ -16,23 +15,15 @@ import { NoteActions } from './note.actions';
 export interface NotesState {
   notes: Note[],
   loading: boolean,
-  themeId: string,
 }
 
 const  INITIAL_STATE: NotesState = {
   notes: [],
   loading: false,
-  themeId: '',
 }
 
 const reducer: Reducer<typeof INITIAL_STATE, NoteActions> = (state = INITIAL_STATE, action) => {
   switch (action.type) {  
-    case START_GET_NOTES: {
-      return {
-        ...state,
-        loading: true
-      }
-    }
     case START_ADD_NOTE: {
       return {
         ...state,

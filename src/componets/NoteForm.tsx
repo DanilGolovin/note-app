@@ -47,7 +47,8 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
       title: title,
       description: description,
       category: filterCategory,
-      id: note?.id || ''
+      id: note?.id || '',
+      themeId: settings.id || ''
     };
 
     onSubmitForm(data);
@@ -68,7 +69,7 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
     <>
       <div
         className={Container.column_flex + " " + Container.align_center}
-        style={{backgroundColor: `${settings.backgroundColor}`, flexBasis: "100%"}}
+        style={{backgroundColor: `${settings.backgroundColor}`, flexBasis: "100%", width: "100%"}}
       >
         <h1>{formTitle}</h1>
         <p>{inputError}</p>
@@ -104,7 +105,6 @@ function NoteForm({ actionName, formTitle, note, onSubmitForm }: Props) {
               <ThemeList />
             </div>
           </div>
-          
           
         </form>
       </div>

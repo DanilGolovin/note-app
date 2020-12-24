@@ -24,14 +24,14 @@ import {
     payload: { noteTheme, uid },
   });
   
-  export const startDeleteNoteTheme = (id: string, uid: string) => ({
+  export const startDeleteNoteTheme = (id: string) => ({
     type: START_DELETE_NOTE_THEME,
-    payload: { id, uid },
+    payload: { id },
   });
   
-  export const startUpdateNoteTheme = (noteTheme: any, uid: string) => ({
+  export const startUpdateNoteTheme = (withApplyingToAll?: boolean) => ({
     type: START_UPDATE_NOTE_THEME,
-    payload: { noteTheme, uid },
+    payload: { withApplyingToAll },
   });
   
   export const getNoteThemes  = (noteThemes: any) => ({
@@ -54,8 +54,9 @@ import {
     payload: { name, value },
   });
   
-  export const startSaveNoteTheme = () => ({
-    type: START_SAVE_NOTE_THEME
+  export const startSaveNoteTheme = (withApplyingToAll?: boolean) => ({
+    type: START_SAVE_NOTE_THEME,
+    payload: { withApplyingToAll }
   })
 
   export const saveNoteTheme = (id: string) => ({

@@ -75,7 +75,8 @@ import {
         return {
           ...state,
           loading: false,  
-          themes: action.payload.noteThemes
+          themes: action.payload.noteThemes,
+          settings: settings
         }
       }
       // case ADD_NOTE_THEME: {
@@ -130,6 +131,7 @@ import {
             settings: settings
           }
       }
+
       case SELECT_THEME: {
         const { id } = action.payload
         const selectedTheme = state.themes.find(theme => theme.id === id)

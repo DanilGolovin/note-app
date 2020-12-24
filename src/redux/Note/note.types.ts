@@ -1,5 +1,3 @@
-export const START_GET_NOTES = 'START_GET_NOTES' as const;
-
 export const START_ADD_NOTE = 'START_ADD_NOTE' as const;
 
 export const START_DELETE_NOTE = 'START_DELETE_NOTE' as const;

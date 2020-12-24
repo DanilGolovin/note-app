@@ -2,41 +2,40 @@ import React from 'react'
 
 import NoteCss from '../styles/NoteItem.module.css';
 import Container from '../styles/Container.module.css';
-import useSettings from '../hooks/useSettings';
+import { SettingsType } from '../redux/NoteTheme/note.theme.reducer';
 
 type NoteProps = {
     title?: string,
     description?: string,
+    themeSettings: SettingsType,
 }
 
-const Note: React.FC<NoteProps> = ({title, description, children}) => {
+const Note: React.FC<NoteProps> = ({title, description, themeSettings, children}) => {
     
-    const { settings } = useSettings()
-
     return (
             <div 
                 className={NoteCss.container}
                 style={{
-                    width: `${settings.width}px`, 
-                    height: `${settings.height}px`,
-                    padding: `${settings.padding}px`,
-                    borderRadius: `${settings.borderRadius}px`,
-                    backgroundColor: `${settings.backgroundColor}`,
+                    width: `${themeSettings.width}px`, 
+                    height: `${themeSettings.height}px`,
+                    padding: `${themeSettings.padding}px`,
+                    borderRadius: `${themeSettings.borderRadius}px`,
+                    backgroundColor: `${themeSettings.backgroundColor}`,
                 }}
             >
                 <h2
                     className={NoteCss.title}
                     style={{
-                        fontSize: `${settings.titleFontSize}px`, 
-                        color: `${settings.titleFontColor}`,
+                        fontSize: `${themeSettings.titleFontSize}px`, 
+                        color: `${themeSettings.titleFontColor}`,
                     }}
                 >
                     {title || 'Note title'}</h2>
                 <p 
                     className={NoteCss.description}
                     style={{
-                        fontSize: `${settings.descriptionFontSize}px`,
-                        color: `${settings.descriptionFontColor}`,
+                        fontSize: `${themeSettings.descriptionFontSize}px`,
+                        color: `${themeSettings.descriptionFontColor}`,
                     }}
                 >
                     {description || 'Note description'}

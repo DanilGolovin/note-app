@@ -5,4 +5,5 @@ export type Note = {
   description: string;
   category: Category;
   id: string;
+  themeId: string,
 };

@@ -16,11 +16,9 @@ function CategoryFilter({ categories, onCategorySelect, filterClass }: Props) {
   const [currentCategory, setCurrentCategory] = useState(defaultCategory);
 
   const onCategoriesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const category = categories.find(category => category.id === e.currentTarget.value)
-      console.log(' onCategoriesChange : ', e)
-      if (!category) return
-      setCurrentCategory(category);
-      onCategorySelect(category);  
+    const category = categories.find(category => category.id === e.currentTarget.value)
+    setCurrentCategory(category || defaultCategory);
+    onCategorySelect(category || defaultCategory);
   };
 
   return (
