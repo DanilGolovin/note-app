@@ -15,8 +15,9 @@ function App() {
           email: user.email,
           uid: user.uid
         };
-        dispatch(user ? authSuccess(userAuth) : setAuthReady());
+        dispatch(authSuccess(userAuth));
       }
+      dispatch(setAuthReady())
     });
   }, [dispatch]);
 
